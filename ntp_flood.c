@@ -144,11 +144,11 @@ int parse_config(int argc, char *argv[])
 	if(argc < need_arg_num) {
 
 		printf("version %s\n", VERSION);
-		printf("Usage : %s dns_server_ip ips_list_filename is_linux ttl_begin/ttl_end sport_begin/sport_end ip_frag send_count send_pps repeat_num [debug]\n", argv[0]);
+		printf("Usage : %s ntp_server_ip ips_list_filename is_linux ttl_begin/ttl_end sport_begin/sport_end ip_frag send_count send_pps repeat_num [debug]\n", argv[0]);
 		printf("example : %s 192.168.0.24/32 ip.txt 1 120/126 1025/65535 0 -1 -1 0\n", argv[0]);
 		return -1;
 	}
-	//dns_server_ip
+	//ntp_server_ip
 	arg_idx ++;
 	{
 		char * dip = NULL, * dip_mask = NULL;
@@ -265,8 +265,7 @@ int parse_config(int argc, char *argv[])
 	arg_idx ++;
 	{
 		config_data.ip_frag = atoi(argv[arg_idx]);
-		/*if(config_data.fix_dns)
-			config_data.ip_frag = 0;*/
+
 		if(config_data.ip_frag > 2)
 			config_data.ip_frag = 0;
 	}	
@@ -482,7 +481,7 @@ int main(int argc, char *argv[])
 	daddr.sin_family = AF_INET;
 	daddr.sin_addr.s_addr = config_data.dip;
 	if(connect(sock, (struct sockaddr *)&daddr, sizeof(struct sockaddr)) < 0) {
-		printf("ntp_flood : cannot connect to dnsserver!\n");
+		printf("ntp_flood : cannot connect to ntpserver!\n");
 		exit(1);	
 	}
 
